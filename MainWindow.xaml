@@ -1,0 +1,113 @@
+﻿<Window x:Class="CryptoWidgetWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CryptoWidgetWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+                WindowStyle="None" AllowsTransparency="True" Background="Transparent" 
+        SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" CornerRadius="15" GlassFrameThickness="0"/>
+    </WindowChrome.WindowChrome>
+    <Border Background="#CC2C2F33" CornerRadius="15" Padding="10">
+        <Grid Background="Transparent">
+            <!-- Заголовок окна -->
+            <Grid Height="45" VerticalAlignment="Top" Background="Transparent" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+                <TextBlock Text="Crypto Widget" VerticalAlignment="Center" Margin="15,0,20,0" Foreground="LimeGreen" FontSize="22"/>
+                <TextBlock Name="dateTimeTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="LightBlue" FontSize="30" Margin="30,0,0,0"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <!-- Кнопка свернуть -->
+                    <Button Width="45" Background="Transparent" BorderBrush="Transparent" Foreground="White" Click="Minimize_Click" Opacity="0.5">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="borderElement" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                                    <Path x:Name="pathElement" Data="M 0 0 L 15 0" Stroke="{TemplateBinding Foreground}" StrokeThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Opacity" Value="1" TargetName="pathElement"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <!-- Кнопка развернуть/восстановить -->
+                    <Button Width="45" Background="Transparent" BorderBrush="Transparent" Foreground="White" Click="MaximizeRestore_Click" Opacity="0.5">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="borderElement" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                                    <Path x:Name="pathElement" Data="M 0 0 L 15 0 L 15 15 L 0 15 Z" Stroke="{TemplateBinding Foreground}" StrokeThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Opacity" Value="1" TargetName="pathElement"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <!-- Кнопка закрыть -->
+                    <Button Width="45" Background="Transparent" BorderBrush="Transparent" Foreground="White" Click="Close_Click" Opacity="0.5">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="borderElement" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                                    <Path x:Name="pathElement" Data="M 0 0 L 15 15 M 0 15 L 15 0" Stroke="{TemplateBinding Foreground}" StrokeThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Opacity" Value="1" TargetName="pathElement"/>
+                                        <Setter Property="Stroke" Value="Red" TargetName="pathElement"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <!-- Основной контент окна -->
+            <Grid Background="Transparent" Margin="0,45,0,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- BTC -->
+                <Image Source="Resources/btc.png" Width="45" Height="45" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="15,10,15,10"/>
+                <Label Content="BTC" Foreground="Orange" FontSize="36" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="0,10,30,10"/>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="0,10,0,10">
+                    <TextBlock Text="$" Foreground="#1AAB1A" FontSize="38" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Name="btcPrice" Foreground="White" FontSize="50" VerticalAlignment="Center"/>
+                </StackPanel>
+                <TextBlock Name="btcChange" FontSize="36" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Margin="30,10,30,10"/>
+
+                <!-- ETH -->
+                <Image Source="Resources/eth.png" Width="45" Height="45" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="15,10,15,10"/>
+                <Label Content="ETH" Foreground="Orange" FontSize="36" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,10,30,10"/>
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="0,10,0,10">
+                    <TextBlock Text="$" Foreground="#1AAB1A" FontSize="38" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Name="ethPrice" Foreground="White" FontSize="50" VerticalAlignment="Center"/>
+                </StackPanel>
+                <TextBlock Name="ethChange" FontSize="36" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Margin="30,10,30,10"/>
+
+                <!-- LTC -->
+                <Image Source="Resources/ltc.png" Width="45" Height="45" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="15,10,15,10"/>
+                <Label Content="LTC" Foreground="Orange" FontSize="36" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,10,30,10"/>
+                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Margin="0,10,0,10">
+                    <TextBlock Text="$" Foreground="#1AAB1A" FontSize="38" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Name="ltcPrice" Foreground="White" FontSize="50" VerticalAlignment="Center"/>
+                </StackPanel>
+                <TextBlock Name="ltcChange" FontSize="36" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Margin="30,10,30,10"/>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
